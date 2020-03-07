@@ -25,12 +25,12 @@ export default class Home extends Component<Props> {
 
         const navigateScreen = (id:number) => {
             const {navigate} = this.props.navigation;
-            navigate(ROUTES_NAME.Home, { id});
+            navigate(ROUTES_NAME.Film, { id});
         }
 
         return (<Layout style={{ flex: 1, backgroundColor: 'black' }}>
             <ScrollView>
-                {films.map{(film, index) =>(
+                {films.map((film, index) =>(
                     <Card onPress={() => navigateScreen(film.id)} key={index}>
                     <Text style={styles.title}>{film.title}</Text>
                     <Text> Episode {film.episode_id.toString()}</Text>
