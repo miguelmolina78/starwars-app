@@ -6,17 +6,24 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
+
+export enum ROUTES_NAME {
+    Home = "Home",
+    Film = "Film"
+}
+
+
 function Routes() {
     return (
             <NavigationContainer>
-                <Stack.Navigator>
+                <Stack.Navigator initialRouteName={ROUTES_NAME.Home}>
                     <Stack.Screen options={{
-                        headerTitle: 'Etanol ou Gasolina?',
+                        headerTitle: 'StarWars',
                         headerTintColor: '#ffffff',
                         headerStyle: {
-                            backgroundColor: '#2b7cd7',
+                            backgroundColor: 'black',
                         }
-                    }} name="Home" component={Home} />
+                    }} name={ROUTES_NAME.Home} component={Home} />
                 </Stack.Navigator>
             </NavigationContainer>
        

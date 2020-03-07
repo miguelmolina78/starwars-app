@@ -1,31 +1,31 @@
 import { action, observable } from 'mobx';
+import { Film } from '../interfaces/starwars-interface';
+
+import * as starWarsApi from '../apis/star-wars_api';
 
 export default class HomeStore {
 
-  @observable etanol = 0;
-  @observable gasolina = 0;
-  @observable resultado = '';
+    @observable films: Film[] = [];
+    @observable film: Film | any = {};
 
-  @action calculate = () => {
-    const { etanol, gasolina } = this;
-    if (!isNaN(Number(etanol)) && !isNaN(Number(gasolina))) {
-      const value = Number(etanol) / Number(gasolina);
-
-      if (value > 0.70) {
-        this.resultado = 'Vale a pena gasolina';
-      } else if (value < 0.70) {
-        this.resultado = 'Vale a pena etanol';
-      } else {
-        this.resultado = 'São equivalentes';
-      }
+    @action getFilms = async () => {
+        try {
+            const { data: films } = await starWarsApi.getFilms();
+            this.films = films;
+        } catch (error) {
+            
+        }
     }
-  }
 
-  @action handleForm = (input) => {
-    const key = Object.keys(input)[0];
-    const value = input[key];
-    this[key] = value;
-  }
+    @action getFilmById = async (id:number) => {
+        try {
+            this.film = {};
+            const { data: film } = await starWarsApi.getFilmsById(id);
+            this.film = film;
+        } catch (error) {
+            
+        }
+    }
 
 }
 const homeStore = new HomeStore();
