@@ -35,7 +35,7 @@ export default class Home extends Component<Props> {
                     <Text style={styles.title}>{film.title}</Text>
                     <Text> Episode {film.episode_id.toString()}</Text>
                     </Card>
-                )}}
+                ))}
             </ScrollView>
         </Layout>);
     }
