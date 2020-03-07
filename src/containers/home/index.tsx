@@ -1,32 +1,43 @@
-import { Button, Card, Input, Text } from '@ui-kitten/components';
+import { Card, Layout, Text } from '@ui-kitten/components';
 import React, { Component, } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import HomeStore from '../../stores/home.store';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
+
+import {ROUTES_NAME} from '../../routes';
 
 interface Props {
-    homeStore: HomeStore
+    homeStore: HomeStore,
+    navigation: any
 }
 
 @inject('homeStore')
 @observer
 export default class Home extends Component<Props> {
 
+    async componentDidMount(){
+        const { getFilms} = this.props.homeStore;
+    }
+
     render() {
-        const { etanol, gasolina, resultado, calculate, handleForm } = this.props.homeStore;
+        const { films } = this.props.homeStore;
 
-        return (<>
-            <Card >
-                <Text>Etanol:</Text>
-                <Input value={etanol.toString()} onChangeText={(etanol) => handleForm({ etanol })} />
-                <Text>Gasolina:</Text>
-                <Input value={gasolina.toString()} onChangeText={(gasolina) => handleForm({ gasolina })} />
+        const navigateScreen = (id:number) => {
+            const {navigate} = this.props.navigation;
+            navigate(ROUTES_NAME.Home, { id});
+        }
 
-                <Button onPress={() => calculate()}>Calcular</Button>
-                <Text style={styles.paragraph}>{resultado}</Text>
-            </Card>
-        </>);
+        return (<Layout style={{ flex: 1, backgroundColor: 'black' }}>
+            <ScrollView>
+                {films.map{(film, index) =>(
+                    <Card onPress={() => navigateScreen(film.id)} key={index}>
+                    <Text style={styles.title}>{film.title}</Text>
+                    <Text> Episode {film.episode_id.toString()}</Text>
+                    </Card>
+                )}}
+            </ScrollView>
+        </Layout>);
     }
 }
 
